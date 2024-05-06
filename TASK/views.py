@@ -17,7 +17,7 @@ class TaskView(APIView):
             
             return Response({
                     'data': serializer.data,   
-                    'message':'blog fetched succesfully'},status=status.HTTP_201_CREATED)
+                    'message':'task fetched succesfully'},status=status.HTTP_201_CREATED)
         except Exception as e:
            print(e)
            return Response({
@@ -38,7 +38,7 @@ class TaskView(APIView):
             serializer.save()
             return Response({
                     'data': serializer.data,   
-                    'message':'blog created'},status=status.HTTP_201_CREATED)
+                    'message':'task created'},status=status.HTTP_201_CREATED)
             
         
         except Exception as e:
@@ -73,7 +73,7 @@ class TaskView(APIView):
             serializer.save()
             return Response({
                             'data': serializer.data,   
-                            'message':'blog updated succesfully'},
+                            'message':'task updated succesfully'},
                             status=status.HTTP_201_CREATED)
         except Exception as e:
            print(e)
@@ -104,7 +104,7 @@ class TaskView(APIView):
             task[0].delete()
             return Response({
                             'data': {},   
-                            'message':'blog deleted succesfully'},
+                            'message':'task deleted succesfully'},
                             status=status.HTTP_201_CREATED)
             
         except Exception as e:
