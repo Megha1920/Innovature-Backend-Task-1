@@ -41,10 +41,9 @@ class TaskView(APIView):
             print(e)
             return Response({'error': 'Something went wrong'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def patch(self, request):
+    def patch(self, request, uid):
         try:
-            data = request.data
-            task = Task.objects.filter(uid=data.get('uid')).first()
+            task = Task.objects.filter(uid=uid).first()
             
             if not task:
                 return Response({
@@ -58,7 +57,7 @@ class TaskView(APIView):
                     'message': 'You are not authorized to update this task'
                 }, status=status.HTTP_400_BAD_REQUEST)
             
-            serializer = TaskSerializer(task, data=data, partial=True)
+            serializer = TaskSerializer(task, data=request.data, partial=True)
             
             if not serializer.is_valid():
                 return Response({
@@ -77,10 +76,9 @@ class TaskView(APIView):
                 'message': 'Something went wrong'
             }, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request):
+    def delete(self, request, uid):
         try:
-            data = request.data
-            task = Task.objects.filter(uid=data.get('uid')).first()
+            task = Task.objects.filter(uid=uid).first()
             
             if not task:
                 return Response({
