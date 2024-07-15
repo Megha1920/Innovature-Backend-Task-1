@@ -5,6 +5,6 @@ from .models import Task
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model=Task
-        exclude=['created_at','updated_at']
+        fields = ['uid', 'user', 'Title', 'Description']
         
     

@@ -65,4 +65,3 @@ class LoginSerialzer(serializers.Serializer):
         }
         return {'message': "Login successful", 'data': access_token_payload}
         
-        
