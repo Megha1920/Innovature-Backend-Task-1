@@ -29,12 +29,12 @@ class FileDownloadAPIView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, pk, format=None):
+    def get(self, request, file_id, format=None):
         if not request.user.is_authenticated:
             return Response({'message': 'User not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
 
         try:
-            file = File.objects.get(pk=pk)
+            file = File.objects.get(pk=file_id)
         except File.DoesNotExist:
             return Response({'error': 'File not found'}, status=status.HTTP_404_NOT_FOUND)
         
@@ -42,6 +42,7 @@ class FileDownloadAPIView(APIView):
         if os.path.exists(file_path):
             response = FileResponse(open(file_path, 'rb'))
             response['Content-Disposition'] = f'attachment; filename="{file.file.name}"'
+            response['Content-Type'] = 'application/octet-stream'  
             return response
         else:
             return Response({'error': 'File not found'}, status=status.HTTP_404_NOT_FOUND)
